@@ -9,7 +9,7 @@
 
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import FontBackgroundColorCommand from './fontbackgroundcolorcommand';
-import { FONT_BACKGROUND_COLOR, renderDowncastElement, renderUpcastAttribute } from '../utils';
+import { FONT_BACKGROUND_COLOR, renderDowncastElement, renderUpcastAttribute, normalizeColorOptions } from '../utils';
 
 /**
  * The font background color editing feature.
@@ -94,6 +94,11 @@ export default class FontBackgroundColorEditing extends Plugin {
 			],
 			columns: 5
 		} );
+
+		editor.config.set(
+			FONT_BACKGROUND_COLOR + '.colors',
+			normalizeColorOptions( editor.config.get( FONT_BACKGROUND_COLOR + '.colors' ) )
+		);
 
 		editor.conversion.for( 'upcast' ).elementToAttribute( {
 			view: {

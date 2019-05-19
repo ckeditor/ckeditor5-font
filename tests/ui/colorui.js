@@ -7,6 +7,7 @@
 
 import ColorUI from './../../src/ui/colorui';
 import FontColorCommand from './../../src/fontcolor/fontcolorcommand';
+import { normalizeColorOptions } from './../../src/utils';
 
 import ClassicTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/classictesteditor';
 import testUtils from '@ckeditor/ckeditor5-core/tests/_utils/utils';
@@ -31,7 +32,7 @@ describe( 'ColorUI', () => {
 	}
 
 	const testColorConfig = {
-		colors: [
+		colors: normalizeColorOptions( [
 			'yellow',
 			{
 				color: '#000',
@@ -50,7 +51,7 @@ describe( 'ColorUI', () => {
 				label: 'Green',
 				hasBorder: false
 			}
-		],
+		] ),
 		columns: 3
 	};
 

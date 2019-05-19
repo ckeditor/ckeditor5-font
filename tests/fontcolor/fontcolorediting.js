@@ -4,6 +4,7 @@
  */
 
 import FontColorEditing from './../../src/fontcolor/fontcolorediting';
+import { normalizeColorOptions } from './../../src/utils';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import VirtualTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/virtualtesteditor';
 import {
@@ -43,8 +44,8 @@ describe( 'FontColorEditing', () => {
 
 	describe( 'config', () => {
 		describe( 'default value', () => {
-			it( 'should be set', () => {
-				expect( editor.config.get( 'fontColor.colors' ) ).to.deep.equal( [
+			it( 'should be set and normalized', () => {
+				const expectedOptions = [
 					{
 						color: 'hsl(0, 0%, 0%)',
 						label: 'Black'
@@ -106,7 +107,9 @@ describe( 'FontColorEditing', () => {
 						color: 'hsl(270, 75%, 60%)',
 						label: 'Purple'
 					}
-				] );
+				];
+
+				expect( editor.config.get( 'fontColor.colors' ) ).to.deep.equal( normalizeColorOptions( expectedOptions ) );
 				expect( editor.config.get( 'fontColor.columns' ) ).to.equal( 5 );
 			} );
 		} );

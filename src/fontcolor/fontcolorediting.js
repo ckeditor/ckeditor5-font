@@ -9,7 +9,7 @@
 
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import FontColorCommand from './fontcolorcommand';
-import { FONT_COLOR, renderDowncastElement, renderUpcastAttribute } from '../utils';
+import { FONT_COLOR, renderDowncastElement, renderUpcastAttribute, normalizeColorOptions } from '../utils';
 
 /**
  * The font color editing feature.
@@ -94,6 +94,8 @@ export default class FontColorEditing extends Plugin {
 			],
 			columns: 5
 		} );
+
+		editor.config.set( FONT_COLOR + '.colors', normalizeColorOptions( editor.config.get( FONT_COLOR + '.colors' ) ) );
 
 		editor.conversion.for( 'upcast' ).elementToAttribute( {
 			view: {

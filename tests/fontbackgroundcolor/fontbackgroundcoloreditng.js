@@ -4,6 +4,7 @@
  */
 
 import FontBackgroundColorEditing from './../../src/fontbackgroundcolor/fontbackgroundcolorediting';
+import { normalizeColorOptions } from './../../src/utils';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import VirtualTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/virtualtesteditor';
 import {
@@ -45,7 +46,7 @@ describe( 'FontBackgroundColorEditing', () => {
 	describe( 'config', () => {
 		describe( 'default value', () => {
 			it( 'should be set', () => {
-				expect( editor.config.get( 'fontBackgroundColor.colors' ) ).to.deep.equal( [
+				const expectedOptions = [
 					{
 						color: 'hsl(0, 0%, 0%)',
 						label: 'Black'
@@ -107,7 +108,9 @@ describe( 'FontBackgroundColorEditing', () => {
 						color: 'hsl(270, 75%, 60%)',
 						label: 'Purple'
 					}
-				] );
+				];
+
+				expect( editor.config.get( 'fontBackgroundColor.colors' ) ).to.deep.equal( normalizeColorOptions( expectedOptions ) );
 				expect( editor.config.get( 'fontBackgroundColor.columns' ) ).to.equal( 5 );
 			} );
 		} );
