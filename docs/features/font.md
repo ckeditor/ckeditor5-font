@@ -252,6 +252,10 @@ ClassicEditor
 	.catch( ... );
 ```
 
+## Integration
+
+The Font plugin is integrated with the {@link features/remove-format Remove Format} plugin by default. There is no need to provide any additional configuration to those plugins in order to use the remove format functionality over elements with applied any font formatting.
+
 ## Installation
 
 To add this feature to your editor, install the [`@ckeditor/ckeditor5-font`](https://www.npmjs.com/package/@ckeditor/ckeditor5-font) package:
