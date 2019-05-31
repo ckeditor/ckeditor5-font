@@ -125,6 +125,16 @@ export default class ColorTableView extends View {
 		this.items.add( this.createStaticColorTable() );
 	}
 
+	destroy() {
+		super.destroy();
+
+		this.focusTracker && this.focusTracker && this.focusTracker.destroy(); this.focusTracker = null;
+		this.keystrokes && this.keystrokes && this.keystrokes.destroy(); this.keystrokes = null;
+		this._focusCycler && this._focusCycler && this._focusCycler.destroy(); this._focusCycler = null;
+
+		this.items.map( c => c.destroy() );
+	}
+
 	/**
 	 * Adds the remove color button as a child of the current view.
 	 *
