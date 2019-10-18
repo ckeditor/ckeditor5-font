@@ -110,7 +110,7 @@ export default class FontSizeUI extends Plugin {
 // @param {Array.<module:font/fontsize~FontSizeOption>} options
 // @param {module:font/fontsize/fontsizecommand~FontSizeCommand} command
 function _prepareListOptions( options, command ) {
-	const itemDefinitions = new Collection();
+	const itemDefinitions = [];
 
 	for ( const option of options ) {
 		const def = {
@@ -135,8 +135,8 @@ function _prepareListOptions( options, command ) {
 		def.model.bind( 'isOn' ).to( command, 'value', value => value === option.model );
 
 		// Add the option to the collection.
-		itemDefinitions.add( def );
+		itemDefinitions.push( def );
 	}
 
-	return itemDefinitions;
+	return new Collection( itemDefinitions );
 }

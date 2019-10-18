@@ -95,7 +95,7 @@ export default class FontFamilyUI extends Plugin {
 // @param {Array.<module:font/fontsize~FontSizeOption>} options
 // @param {module:font/fontsize/fontsizecommand~FontSizeCommand} command
 function _prepareListOptions( options, command ) {
-	const itemDefinitions = new Collection();
+	const itemDefinitions = [];
 
 	// Create dropdown items.
 	for ( const option of options ) {
@@ -116,7 +116,8 @@ function _prepareListOptions( options, command ) {
 			def.model.set( 'labelStyle', `font-family: ${ option.view.styles[ 'font-family' ] }` );
 		}
 
-		itemDefinitions.add( def );
+		itemDefinitions.push( def );
 	}
-	return itemDefinitions;
+
+	return new Collection( itemDefinitions );
 }

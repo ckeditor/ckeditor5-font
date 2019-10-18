@@ -163,8 +163,7 @@ export default class ColorTableView extends View {
 			children: this.items
 		} );
 
-		this.items.add( this._removeColorButton() );
-		this.items.add( this.staticColorsGrid );
+		this.items.add( this._removeColorButton(), this.staticColorsGrid );
 
 		if ( documentColorsCount ) {
 			// Create a label for document colors.
@@ -182,10 +181,8 @@ export default class ColorTableView extends View {
 				}
 			} );
 
-			this.items.add( label );
-
 			this.documentColorsGrid = this._createDocumentColorsGrid();
-			this.items.add( this.documentColorsGrid );
+			this.items.add( label, this.documentColorsGrid );
 		}
 	}
 
