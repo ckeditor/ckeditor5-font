@@ -13,8 +13,8 @@ import mix from '@ckeditor/ckeditor5-utils/src/mix';
  * @extends module:utils/collection~Collection
  */
 export default class DocumentColorCollection extends Collection {
-	constructor( options ) {
-		super( options );
+	constructor( ...args ) {
+		super( ...args );
 
 		/**
 		 * Indicates whether the document color collection is empty.
@@ -23,11 +23,11 @@ export default class DocumentColorCollection extends Collection {
 		 * @readonly
 		 * @member {Boolean} #isEmpty
 		 */
-		this.set( 'isEmpty', true );
+		this.set( 'isEmpty', !this.length );
 	}
 
 	/**
-	 * Adds a color to the document color collection.
+	 * Adds a color (or colors) to the document color collection.
 	 *
 	 * This method ensures that no color duplicates are inserted (compared using
 	 * the color value of the {@link module:ui/colorgrid/colorgrid~ColorDefinition}).
@@ -35,20 +35,31 @@ export default class DocumentColorCollection extends Collection {
 	 * If the item does not have an ID, it will be automatically generated and set on the item.
 	 *
 	 * @chainable
-	 * @param {module:ui/colorgrid/colorgrid~ColorDefinition} item
-	 * @param {Number} [index] The position of the item in the collection. The item
-	 * is pushed to the collection when `index` is not specified.
+	 * @param {...(module:ui/colorgrid/colorgrid~ColorDefinition)} items
+	 * @param {Number} [index] The position of the color (or colors) in the collection. Colors
+	 * are pushed to the collection when `index` is not specified.
 	 * @fires add
 	 */
-	add( item, index ) {
-		if ( this.find( element => element.color === item.color ) ) {
-			// No duplicates are allowed.
-			return;
+	add( ...args ) {
+		let items = args;
+
+		// No duplicates are allowed.
+		items = items.filter( ( item, index ) => {
+			// Don't filter out the add index (last argument).
+			if ( index === items.length - 1 && typeof item === 'number' ) {
+				return true;
+			}
+
+			return !this.find( element => element.color === item.color );
+		} );
+
+		if ( items.length ) {
+			super.add( ...items );
 		}
 
-		super.add( item, index );
+		this.set( 'isEmpty', !this.length );
 
-		this.set( 'isEmpty', false );
+		return this;
 	}
 
 	/**
@@ -57,9 +68,7 @@ export default class DocumentColorCollection extends Collection {
 	remove( subject ) {
 		const ret = super.remove( subject );
 
-		if ( this.length === 0 ) {
-			this.set( 'isEmpty', true );
-		}
+		this.set( 'isEmpty', !this.length );
 
 		return ret;
 	}

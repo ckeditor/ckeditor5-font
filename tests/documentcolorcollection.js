@@ -25,11 +25,7 @@ describe( 'DocumentColorCollection', () => {
 	];
 
 	beforeEach( () => {
-		documentColorCollection = new DocumentColorCollection();
-
-		colors.forEach( item => {
-			documentColorCollection.add( item );
-		} );
+		documentColorCollection = new DocumentColorCollection( colors );
 	} );
 
 	it( 'constructor()', () => {
@@ -57,5 +53,18 @@ describe( 'DocumentColorCollection', () => {
 	it( 'hasColor()', () => {
 		expect( documentColorCollection.hasColor( '111' ) ).to.be.true;
 		expect( documentColorCollection.hasColor( '555' ) ).to.be.false;
+	} );
+
+	describe( 'add()', () => {
+		it( 'supports adding multiple items at a time', () => {
+			documentColorCollection = new DocumentColorCollection();
+
+			documentColorCollection.add( colors[ 0 ] );
+			documentColorCollection.add( colors[ 1 ], colors[ 2 ], 0 );
+
+			expect( documentColorCollection.map( item => item.color ) ).to.have.ordered.members( [
+				'222', '333', '111'
+			] );
+		} );
 	} );
 } );
